@@ -1,0 +1,17 @@
+.btn{
+    background-color: purple;
+    color: white;
+    padding: 6px,12px;
+    border-radius: 7px;
+    &.active{
+        background-color: green;
+    }
+}
+.isError{
+    color: red;
+    font-size: 12px;
+}
+.isWarning{
+    color: green;
+    font-size: 12px;
+}

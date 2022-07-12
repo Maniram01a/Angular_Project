@@ -1,0 +1,31 @@
+{{title}}
+<br>
+<button disabled="{{isdisabled}}">Submit</button>
+<br><br>
+<button [disabled]="isdisabled"> property Submit</button>
+<br><br>
+<button (click)="toggleUpdate()">Toggle</button>
+<br><br>
+<button class="btn" [class.active]="isdisabled" >Login</button>
+<br>
+<br>
+{{userName}}
+<input type="text" [(ngModel)]="userName">
+<div [ngClass]="{isError: userName.length>10,isWarning:userName.length>20}">
+    Please enter a valid userName
+</div>
+<hr>
+<button class="btn" [style.font-size.px]="20">Login</button>
+<br><br>
+<input type="text" [(ngModel)]="message">
+<div *ngIf="message.length>10 ; else falsetemplate">
+    message is more {{message}}
+</div>
+<ng-template #falsetemplate>
+less message {{message}}
+</ng-template>
+<ul [ngSwitch]="userName">
+  <li *ngSwitchCase="'abc'">hello abc</li>
+  <li *ngSwitchCase="'ayz'">hello xyz</li>
+  <li *ngSwitchDefault>hello default</li>
+</ul>
