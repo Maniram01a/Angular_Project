@@ -1,0 +1,41 @@
+
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Filter</label>
+      <input type="email" class="form-control" [(ngModel)]="filterText" id="exampleInputEmail1" aria-describedby="emailHelp">
+      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    </div>
+    
+    
+    
+  
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">
+            <mat-icon aria-hidden="false" (click)="toggleImage()" aria-label="Example home icon">image</mat-icon>
+
+        </th>
+        <!-- <th scope="col">Product</th> -->
+        <th scope="col">Cost</th>
+        <th scope="col">Name</th>
+        <th scope="col">price</th>
+        <th scope="col">Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let game of games | pageFilter : filterText ; let i = index">
+        <td >{{i + 1}}</td>
+        <td >
+             <img [src]="game.imageUrl | defaultImage : 'assets/images/download1.jfif'"  width="90px" *ngIf="showImage" [ngStyle]="{width :showImage ? '40px' : '100px'}"> 
+        </td>
+        <td >{{game.cost | cost}}</td>
+        <td >{{game.name | slice : 0:3}}</td>
+        <td >{{game.price | currency : 'INR' : 'symbol' : '5.2-2'}}</td>
+        <td >{{game.starRating}}</td>
+        
+      </tr>
+      
+    </tbody>
+  </table>

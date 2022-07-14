@@ -1,0 +1,304 @@
+----------------------------angular day3 ------------------------------
+--------------------------------------------Angular material ------------------------------------------------
+
+angular material :https://material.angular.io/guide/getting-started
+How to add angular material :
+   1) install angular material
+         ng add @angular/material
+   2) make a folder and add a file.ts and add add this code 
+           1)src
+            2)Modules folder
+                  3)materialModule.ts file
+
+            import { CommonModule } from '@angular/common';
+            import { NgModule } from '@angular/core';
+            import {MatButtonModule} from '@angular/material/button'; // bitton
+            import { AppComponent } from 'src/app/app.component';
+
+            const materialModule =[
+               CommonModule,  // add all module that used
+               MatButtonModule // button
+
+            ]
+            @NgModule({
+            
+            imports: [
+               ...materialModule
+               ],
+
+               exports: [...materialModule]
+            
+            
+            })
+            export class MaterialModule { }
+
+   3) import in app.module.ts file
+         imports: [
+         BrowserModule,
+         AppRoutingModule,
+         MaterialModule
+      ],
+
+   4) how to use angular module
+       1) go angular material site
+           2) select any one like table ,button,card
+              3) go to api and select import and add in materialModule.ts and then provide in import and export also
+
+
+---------------------------------------------------adding table using angular material--------------------------------------
+1) repeat how to add angualr material
+2) generate componenet name product
+3) product.html: https://material.angular.io/components/table/examples
+   go angular material and copy  table code
+4) also add ts code in product.ts
+---------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------Folder structure for project -------------------------------------------------
+1)repeat adding table using angular material
+2) make component
+      src
+         app 
+            game  // module
+              1)components
+                  game-list // componenet
+                  game-details // component
+              2)services
+                 game // service
+                 mockdata.ts // ts file
+              3)pipes
+              4)add these file in game folder becase we want export this componenet
+                     game.componenet.ts
+                     game.componenet.css
+                     game.componenet.html
+                     game.componenet.spec
+              5)game-module.ts // all componenet and angular material componenet and register game-module.ts to app.module.ts
+                  add all component that use angular material-------
+                         import { CommonModule } from '@angular/common';
+                        import { NgModule } from '@angular/core';
+                        import { GameDetailsComponent } from './componenets/game-details/game-details.component';
+                        import { GameListComponent } from './componenets/game-list/game-list.component';
+
+                        const componenets =[
+                           GameDetailsComponent, // componenet
+                           GameListComponent // componenet
+                           GameComponent // game componenet
+
+                        ]
+
+                        @NgModule({
+                        
+                        imports: [
+                           CommonModule,
+                           ...componenets //  register here
+
+                        ],
+                        exports:[GameComponent] // we wnat to export GameComponent 
+                        
+                        
+                        })
+                        export class MaterialModule { }
+
+            6) ap.module.ts
+               @NgModule({
+                  declarations: [   // for componenet
+                    
+                  ],
+                  imports: [ // for module
+                     
+                     GameModule
+                  ],
+                  providers: [],
+                  bootstrap: [AppComponent]
+                  })
+            7) copy game-list-componenet.ts  selector :app-game-list and add in game.componenet.html
+            8) copy game.componenet.ts selector app-game and add in app.componenet.html
+            9) use game service point no.2 and make a function (game-service.ts:) 
+                
+                export class GameService {
+
+                  constructor() { }
+                  getGameList() : Gamesdata[] {
+
+                     return games;
+                  }
+                  }
+
+            
+            10) make a folder like models
+                 models
+                    models.ts 
+                      export interface Gamesdata{
+                        "id": number,
+                        "name": string,
+                        "work": string,
+                        "email": string,
+                        "dob": string,
+                        "address": string,
+                        "city": string,
+                        "imageUrl":string,
+                        "price":number,
+                        "cost":number,
+                        "starRating":number
+                        
+
+                  }
+                  }
+            11) 10) use componenet  point no. 1
+                   game // componenet 
+                   game-list-componenet.ts and call function that define game-service.ts:
+
+                   export class GameListComponent implements OnInit {
+
+                           game:Gamesdata[]= [];
+
+                           constructor(private gameService:GameService) { }
+
+                           ngOnInit(): void {
+                              this.game = this.gameService.getGameList();
+                           }
+
+                           } 
+               12) show data in game-list-componenet.html: using bootstrap
+                
+                  
+                     <table class="table">
+                        <thead>
+                           <tr>
+                           <th scope="col">Id</th>
+                           <th scope="col">image</th>
+                           <!-- <th scope="col">Product</th> -->
+                           <th scope="col">Cost</th>
+                           <th scope="col">price</th>
+                           <th scope="col">Rating</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr *ngFor="let game of games; let i = index">
+                           <td >{{i + 1}}</td>
+                           <td >
+                                 <img [src]="game.imageUrl" width="90px">
+                           </td>
+                           <td >{{game.cost}}</td>
+                           <td >{{game.price}}</td>
+                           <td >{{game.starRating}}</td>
+                           
+                           </tr>
+                           
+                        </tbody>
+                     </table>
+
+               13) use game-componenet.html
+                  <nav class="navbar bg-light">
+                  <div class="container-fluid">
+                     <a class="navbar-brand" href="#">Navbar</a>
+                  </div>
+               </nav>
+               <app-game-list></app-game-list>
+
+               14) asset
+                      images
+
+
+
+Icon: https://fonts.google.com/icons?icon.query=image
+How to use ngStyle:
+   [ngStyle]="{width :showImage ? '40px' : '100px'}"
+
+-------------------------------------------------------------------------------------------------------------------------------------
+decleration : [pipe,componenet,directive]
+
+-------------------------------------------------What is pipe : -----------------------------------------------------------------
+     Use for filter
+     predefined pipe
+         1) <td >{{game.name | uppercase}}</td> // use for uppercase
+         2) <td >{{game.price | currency : 'INR' : 'symbol' : '5.2-2'}}</td> //   ₹33,224.00 ,INR -₹, 5.2-2 min 5 digit 2.2 min two digit after            point and max 2
+         3) <td >{{game.name | titlecase}}</td>
+         4) <td >{{game.name | slice : 0:3}}</td> // ony show three char like this 	Ada
+
+How to make pipe: 
+    1) ng g p cost // cost is pipe name
+    2) register in app.module.ts 
+    3)set value ---
+      import { Pipe, PipeTransform } from '@angular/core';
+
+         @Pipe({
+         name: 'cost' // pipe name we can use 
+         })
+         export class CostPipe implements PipeTransform {
+
+         transform(value: number, ...args: unknown[]): unknown {
+            return value >20000 ? 'highest price' :'low price';
+         }
+
+         }
+
+      4) use pipe
+        <td >{{game.cost | cost}}</td>  // show highest price if price > 2000 othewise low price , cost ko value game.cost se milega
+
+------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------How to use filter ---------------------------------------------------
+1)pagefilter--
+      import { Pipe, PipeTransform } from '@angular/core';
+      import { Gamesdata } from '../Models/game';
+      import { games } from '../services/mockdata';
+
+      @Pipe({
+      name: 'pageFilter'
+      })
+      export class PageFilterPipe implements PipeTransform {
+
+      transform(games: Gamesdata[], filterText : string): Gamesdata[] {
+         return filterText ? games.filter(game => game.name.toLowerCase().indexOf(filterText) > -1) : games;
+      }
+
+      }
+
+2) in game-list-componenet.html---
+
+
+         <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Filter</label>
+            <input type="email" class="form-control" [(ngModel)]="filterText" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+         </div>
+         
+         
+         
+      
+
+      <table class="table">
+         <thead>
+            <tr>
+            <th scope="col">Id</th>
+            <th scope="col">
+                  <mat-icon aria-hidden="false" (click)="toggleImage()" aria-label="Example home icon">image</mat-icon>
+
+            </th>
+            <!-- <th scope="col">Product</th> -->
+            <th scope="col">Cost</th>
+            <th scope="col">Name</th>
+            <th scope="col">price</th>
+            <th scope="col">Rating</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr *ngFor="let game of games | pageFilter : filterText ; let i = index"> // use pipe
+            <td >{{i + 1}}</td>
+            <td >
+                  <img [src]="game.imageUrl | defaultImage : 'assets/images/download1.jfif'"  width="90px" *ngIf="showImage" [ngStyle]="{width :showImage ? '40px' : '100px'}"> 
+            </td>
+            <td >{{game.cost | cost}}</td>
+            <td >{{game.name | slice : 0:3}}</td>
+            <td >{{game.price | currency : 'INR' : 'symbol' : '5.2-2'}}</td>
+            <td >{{game.starRating}}</td>
+            
+            </tr>
+            
+         </tbody>
+      </table>
+ 3) game-list-componenet.ts
+            export class GameListComponent implements OnInit {
+             games:Gamesdata[]= [];
+             showImage = true;
+              filterText = " ";
+            }
+            
