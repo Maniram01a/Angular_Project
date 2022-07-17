@@ -18,6 +18,7 @@ import { PageFilterPipe } from './game/pipes/page-filter.pipe';
   declarations: [
     AppComponent,
     ProductComponent,
+    
   
    
     

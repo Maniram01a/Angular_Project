@@ -20,4 +20,7 @@ export class GameListComponent implements OnInit {
     this.showImage = !this.showImage;
   }
 
+  handleratingClick(message:string){
+    console.log('message',message);
+  }
 }

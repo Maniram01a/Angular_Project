@@ -10,7 +10,7 @@ export const games =[
         "price":33224,
         "cost":454,
         "starRating":5,
-        "imageUrl": "assets/images/download11.jfif"
+        "imageUrl": "assets/images/download1.jfif"
         
       },
       {
@@ -23,7 +23,7 @@ export const games =[
         "city": "Toronto",
         "price":224,
         "cost":454,
-        "starRating":4,
+        "starRating":4.1,
         "imageUrl": "assets/images/download1.jfif"
         
       },
@@ -37,7 +37,7 @@ export const games =[
         "city": "Boston",
         "price":98989,
         "cost":454,
-        "starRating":3,
+        "starRating":3.5,
         "imageUrl": "assets/images/download1.jfif"
         
       },

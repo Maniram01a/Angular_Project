@@ -32,8 +32,13 @@
         </td>
         <td >{{game.cost | cost}}</td>
         <td >{{game.name | slice : 0:3}}</td>
-        <td >{{game.price | currency : 'INR' : 'symbol' : '5.2-2'}}</td>
-        <td >{{game.starRating}}</td>
+        <td >{{game.price | currency : 'INR' : 'symbol' : '5.2-2'}}
+          
+
+        </td>
+        <td >{{game.starRating}}
+          <app-star [rating]="game.starRating" (ratingClicked)="handleratingClick($event)"></app-star>
+        </td>
         
       </tr>
       

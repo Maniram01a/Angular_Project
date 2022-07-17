@@ -8,6 +8,7 @@ import { CostPipe } from './pipes/cost.pipe';
 import { DefaultImagePipe } from './pipes/default-image.pipe';
 import { PageFilterPipe } from './pipes/page-filter.pipe';
 import { FormsModule } from '@angular/forms';
+import { StarComponent } from './componenets/star/star.component';
 
 const componenets =[
     GameDetailsComponent,
@@ -16,7 +17,8 @@ const componenets =[
     CostPipe,
     DefaultImagePipe,
     PageFilterPipe,
-    PageFilterPipe
+    PageFilterPipe,
+    StarComponent
 
 ]
 

@@ -302,3 +302,148 @@ How to make pipe:
               filterText = " ";
             }
             
+
+-----------------------output input dynamic star  13/07/2022 --------------------
+            }
+------------------------------------------------------ How to add star ----------------------------------------------
+use previous code
+Link for start  : https://developers.google.com/fonts/docs/material_icons , https://fonts.google.com/icons?icon.query=star
+
+
+1) add a component name like star in componenet
+2) in star-componenet.html 
+   <mat-icon aria-hidden="false" aria-label="Example home icon">star</mat-icon>
+
+3)use previous in game-list-component.html add star tag
+    <td >{{game.cost | cost}}</td>
+        <td >{{game.name | slice : 0:3}}</td>
+        <td >{{game.price | currency : 'INR' : 'symbol' : '5.2-2'}}
+          
+
+        </td>
+        <td >{{game.starRating}}
+         <app-star></app-star>
+        </td>
+4) register in game-madule.ts 
+------------------------------------------------------------How to use Input method --------------------------------------
+1) in start-componenet.ts define input method
+         export class StarComponent implements OnInit, OnChanges{
+         @Input() rating: number = 0; // input method
+         constructor() { }
+
+         ngOnChanges(changes: SimpleChanges): void {
+            console.log("change",changes);
+         }
+
+         ngOnInit(): void {
+         }
+
+         }
+2)give input from  game-componenet.html 
+       <td >{{game.cost | cost}}</td>
+        <td >{{game.name | slice : 0:3}}</td>
+        <td >{{game.price | currency : 'INR' : 'symbol' : '5.2-2'}}
+          
+
+        </td>
+        <td >{{game.starRating}}
+          <app-star [rating]="game.starRating"></app-star>
+        </td>
+3) in star.componenet.html
+      <div class="star.wrapper">
+      <mat-icon aria-hidden="false" aria-label="Example home icon">star</mat-icon>
+      <mat-icon aria-hidden="false" aria-label="Example home icon">star</mat-icon>
+      <mat-icon aria-hidden="false" aria-label="Example home icon">star</mat-icon>
+      <mat-icon aria-hidden="false" aria-label="Example home icon">star</mat-icon>
+      <mat-icon aria-hidden="false" aria-label="Example home icon">star</mat-icon>
+      </div>
+
+4)in star.componenet.hcss
+------------------------------------------------------------------- how to show star dynamic ---------------------------
+Like 5  then show five star 4 then show four star 3.3 then show three and half star
+1) game-list-componenet.html
+           <td >{{game.cost | cost}}</td>
+            <td >{{game.name | slice : 0:3}}</td>
+            <td >{{game.price | currency : 'INR' : 'symbol' : '5.2-2'}}
+               
+
+            </td>
+            <td >{{game.starRating}}
+               <app-star [rating]="game.starRating"></app-star>
+            </td>
+2) star-componenet.ts 
+            
+         export class StarComponent implements OnInit, OnChanges{
+         @Input() rating: number = 0;
+         totalStarwidth=120;  // 1 star width is 24 then 24*5 is equal to 120
+         starwidth = 0;
+         constructor() { }
+
+         ngOnChanges(changes: SimpleChanges): void {
+            console.log("change",changes);
+            if(this.rating)
+            {
+            this.starwidth = 24 * this.rating;
+            }
+         }
+
+         ngOnInit(): void {
+         }
+
+         }
+3) in star.componenet.css
+         .star-wrapper{
+         div {
+            display: flex;
+            overflow: hidden;
+            cursor: pointer;
+
+            mat-icon {
+               display: inline-table;
+            }
+         }
+         }
+
+--------------------------------------------------Output method --------------------------------------------
+use to trnasfer child data to parent
+1) star-componenet.ts
+            import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+
+            @Component({
+            selector: 'app-star',
+            templateUrl: './star.component.html',
+            styleUrls: ['./star.component.scss']
+            })
+            export class StarComponent implements OnInit, OnChanges{
+           
+            @Output() ratingClicked = new EventEmitter(); // output method
+            
+
+         }
+
+2) in star.componenet.html
+         <div class="star-wrapper" [style.width.px]="totalStarwidth">
+            <div  [style.width.px]="starwidth" [title]="rating" (click)="ratinkgStarClick()">  // make function
+               <mat-icon aria-hidden="false" aria-label="Example home icon">star</mat-icon>
+               <mat-icon aria-hidden="false" aria-label="Example home icon">star</mat-icon>
+               <mat-icon aria-hidden="false" aria-label="Example home icon">star</mat-icon>
+               <mat-icon aria-hidden="false" aria-label="Example home icon">star</mat-icon>
+               <mat-icon aria-hidden="false" aria-label="Example home icon">star</mat-icon>
+         </div>
+         </div>
+3) star.componenet.ts  
+
+      public ratinkgStarClick():void{
+      this.ratingClicked.emit(`the rating ${this.rating} was clicked`)
+   }
+
+4) game-list-componenet.html 
+        </td>
+        <td >{{game.starRating}}
+          <app-star [rating]="game.starRating" (ratingClicked)="handleratingClick($event)"></app-star>
+        </td>
+5) define a function game-list-componenet.ts
+      handleratingClick(message:string){
+         console.log('message',message);
+      }
+--------------------------------------------------------------
